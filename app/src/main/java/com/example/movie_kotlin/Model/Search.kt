@@ -6,10 +6,11 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Search {
     @JsonProperty("Search")
-    var search: List<Movie>? = null
+    lateinit var search: List<Movie>
     @JsonProperty("totalResults")
     var totalResults: String? = null
     @JsonProperty("Response")
     var response: String? = null
 }
+
 

@@ -1,7 +1,7 @@
 package com.example.movie_kotlin.MvpView
 
-import com.example.movie_kotlin.Model.DummyData
+import com.example.movie_kotlin.Model.Search
 
 interface ViewInterface {
-    fun displayMovie(data:List<DummyData> )
+    fun displayMovie(search: Search )
 }

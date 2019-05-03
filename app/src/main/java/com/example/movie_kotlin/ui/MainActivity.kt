@@ -9,10 +9,12 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import com.example.movie_kotlin.Adapter.RecyclerViewAdapter
 import com.example.movie_kotlin.Base.BaseActivity
-import com.example.movie_kotlin.Model.DummyData
+import com.example.movie_kotlin.Model.Movie
+import com.example.movie_kotlin.Model.Search
 import com.example.movie_kotlin.MvpView.ViewInterface
 import com.example.movie_kotlin.Presenter.MainPresenter
 import com.example.movie_kotlin.R
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() ,ViewInterface {
 
@@ -21,29 +23,36 @@ class MainActivity : BaseActivity() ,ViewInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val etSearch=findViewById<EditText>(R.id.etSearch)
-        val btnSearch=findViewById<Button>(R.id.btnSearch)
-        mainPresenter.attachView(this)
-        mainPresenter.getMovie()
 
+        mainPresenter.attachView(this)
+
+        btnSearch.setOnClickListener {
+            mainPresenter.searchMovies(etSearch.text.toString())
+        }
     }
+
 
     protected override fun setLayoutResourceId(): Int {
         return R.layout.activity_main
     }
 
-    fun generateRecyclerView(dummyDataList: List<DummyData>){
+    fun generateRecyclerView(dataList: List<Movie>){
         val recyclerView=findViewById<RecyclerView>(R.id.recycler)
-        val adapter = RecyclerViewAdapter(dummyDataList,this)
+        val adapter = RecyclerViewAdapter(dataList,this)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
         recyclerView.adapter = adapter
-        Log.d("datalist", dummyDataList.size.toString() + "")
+        Log.d("datalist", dataList.size.toString() + "")
     }
 
-    override fun displayMovie(data:List<DummyData> ) {
-        generateRecyclerView(data)
+    override fun displayMovie(search: Search ) {
+        generateRecyclerView(search.search)
 
+    }
+
+     override fun onDetachView() {
+        super.onDestroy()
+        mainPresenter.onDetachView()
     }
 
 

@@ -4,4 +4,5 @@ import android.view.View
 
 interface PresenterInterface<V:ViewInterface>{
     fun attachView(viewInterface:V)
+    fun detachView()
 }

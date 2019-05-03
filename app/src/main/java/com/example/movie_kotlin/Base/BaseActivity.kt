@@ -11,4 +11,8 @@ abstract class  BaseActivity : AppCompatActivity() {
     }
 
     protected abstract fun setLayoutResourceId(): Int
+   @Override
+    protected open fun onDetachView(){
+        super.onDestroy()
+    }
 }
